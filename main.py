@@ -2,7 +2,7 @@ import random
 import tensorflow as tf
 
 from dqn.agent import Agent
-from dqn.environment import GymEnvironment, SimpleGymEnvironment
+from environment import GymEnvironment, SimpleGymEnvironment
 from config import get_config
 
 flags = tf.app.flags
@@ -18,7 +18,7 @@ flags.DEFINE_integer('action_repeat', 4, 'The number of action to be repeated')
 
 # Etc
 flags.DEFINE_boolean('use_gpu', True, 'Whether to use gpu or not')
-flags.DEFINE_string('gpu_fraction', '1/1', 'idx / # of gpu fraction e.g. 1/3, 2/3, 3/3')
+flags.DEFINE_string('gpu_fraction', '1/2', 'idx / # of gpu fraction e.g. 1/3, 2/3, 3/3')
 flags.DEFINE_boolean('display', False, 'Whether to do display the game screen or not')
 flags.DEFINE_boolean('is_train', True, 'Whether to do training or testing')
 flags.DEFINE_integer('random_seed', 123, 'Value of random seed')
@@ -42,7 +42,7 @@ def calc_gpu_fraction(fraction_string):
 
 def main(_):
   gpu_options = tf.GPUOptions(
-      per_process_gpu_memory_fraction=calc_gpu_fraction(FLAGS.gpu_fraction))
+      per_process_gpu_memory_fraction=calc_gpu_fraction(FLAGS.gpu_fraction), allow_growth=4)
 
   with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
     config = get_config(FLAGS) or FLAGS
