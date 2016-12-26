@@ -2,7 +2,7 @@ import random
 import tensorflow as tf
 
 from dqn.agent import Agent
-from environment import GymEnvironment, SimpleGymEnvironment
+from environment_train import GymEnvironment, SimpleGymEnvironment
 from config import get_config
 
 flags = tf.app.flags
