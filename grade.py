@@ -15,6 +15,7 @@ from environment import ALE
 #random.seed(123)
 
 seed = int(sys.argv[1])
+init_rand = int(sys.argv[2])
 
 f = open('log','a')
 
@@ -23,15 +24,14 @@ gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.3, allow_growth=4)
 with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
 
     # Init env
-    env = ALE(seed)
-
+    env = ALE(seed, init_rand)
 
     # Init agent
     agent = Agent(sess, env.ale.getMinimalActionSet())
     action_repeat, random_init_step, screen_type = agent.getSetting()
 
     # Set env setting
-    env.setSetting(action_repeat, random_init_step, screen_type)
+    env.setSetting(action_repeat, screen_type)
 
     # Get a new game
     screen = env.new_game()
