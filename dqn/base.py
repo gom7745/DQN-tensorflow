@@ -39,16 +39,28 @@ class BaseModel(object):
   def load_model(self):
     print(" [*] Loading checkpoints...")
 
-    ckpt = tf.train.get_checkpoint_state(self.checkpoint_dir)
-    if ckpt and ckpt.model_checkpoint_path:
-      ckpt_name = os.path.basename(ckpt.model_checkpoint_path)
-      fname = os.path.join(self.checkpoint_dir, ckpt_name)
+    fname = './best_model.ckpt'
+    if os.path.exists(fname):
       self.saver.restore(self.sess, fname)
       print(" [*] Load SUCCESS: %s" % fname)
       return True
     else:
       print(" [!] Load FAILED: %s" % self.checkpoint_dir)
       return False
+    '''
+    ckpt = tf.train.get_checkpoint_state(self.checkpoint_dir)
+    if ckpt and ckpt.model_checkpoint_path:
+      ckpt_name = os.path.basename(ckpt.model_checkpoint_path)
+      ckpt_name = '-11750000'
+      fname = os.path.join(self.checkpoint_dir, ckpt_name)
+      fname = './best_model.ckpt'
+      self.saver.restore(self.sess, fname)
+      print(" [*] Load SUCCESS: %s" % fname)
+      return True
+    else:
+      print(" [!] Load FAILED: %s" % self.checkpoint_dir)
+      return False
+    '''
 
   @property
   def checkpoint_dir(self):
